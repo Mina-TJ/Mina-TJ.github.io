@@ -41,6 +41,14 @@
     .s-links a:hover { color: var(--bright); }
     .ico { width: 13px; height: 13px; flex-shrink: 0; fill: var(--gold-dim); }
     .bio-text p { font-size: 1.05rem; line-height: 1.95; color: var(--text); margin-bottom: 1.6rem; font-weight: 300; }
+    .incoming-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--bg2); border: 1px solid var(--gold-dim);
+      border-radius: 4px; padding: 10px 16px; margin-bottom: 2rem;
+      font-size: 0.82rem; color: var(--gold); font-weight: 300;
+    }
+    .incoming-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); animation: pulse 1.8s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
     .interests-block { margin-top: 2.4rem; padding-top: 2rem; border-top: 1px solid var(--border); }
     .interests-label { font-size: 0.68rem; font-weight: 500; color: var(--gold-dim); text-transform: uppercase; letter-spacing: 0.16em; margin-bottom: 16px; }
     .interests-pills { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -116,11 +124,19 @@
       </ul>
     </aside>
     <main>
-      <div class="bio-text">
+      <div class="incoming-badge">
+        <span class="incoming-dot"></span>
+        Incoming Associate Data Analyst Intern · JD Irving · Dieppe, NB · May 4, 2026
+      </div>
+<div class="bio-text">
         <p>I am a Master of Business Analytics student at the Sobey School of Business, Saint Mary's University in Halifax, Canada. My work bridges the gap between technical data science and real-world business strategy.</p>
+
         <p>I hold degrees in Computer Engineering and International Business Management; a combination that lets me speak both the language of algorithms and the language of business. I began my analytics journey in Saskatoon before relocating to Halifax to deepen my expertise in applied analytics.</p>
-        <p>I work primarily with Python, R and SQL. I apply Python for agentic AI and RAG projects. My passion is transforming complex, messy data into clear and actionable insights, and exploring the exciting frontier of Agentic AI.</p>
+
+        <p>I work primarily with Python, R and SQL. I also apply Python for agentic AI and RAG projects. My passion is transforming complex, messy data into clear and actionable insights, and exploring the exciting frontier of Agentic AI.</p>
+
         <p>Previously, I worked in marketing and data support which is where my curiosity for analytics was first sparked. I enjoy tackling challenging problems and finding creative, data-driven solutions.</p>
+
       </div>
       <div class="interests-block">
         <div class="interests-label">Research Interests</div>
