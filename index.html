@@ -8,11 +8,11 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --bg: #0f0f0f; --bg2: #171717; --bg3: #1f1f1f;
+      --bg: #0f0f0f; --bg2: #171717; --bg3: #1c1c1c;
       --border: #2c2c2c; --text: #b8b8b8; --dim: #555;
       --bright: #f2f2f2; --gold: #c8a96d; --gold-dim: #8a6e3e;
-      --blue: #6b9fd4; --blue-dim: #2a4060; --blue-bg: #0f1e30;
-      --green: #7db87d; --green-dim: #3a5e3a; --green-bg: #1a2e1a;
+      --blue: #6b9fd4; --blue-dim: #2a4060; --blue-bg: #0f1e30; --blue-border: #1e3550; --blue-hover: #1a2e40;
+      --green: #7db87d; --green-dim: #3a5e3a; --green-bg: #1a2e1a; --green-border: #2d4d2d; --green-hover: #1f2e1f;
     }
     html { scroll-behavior: smooth; }
     body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
@@ -56,9 +56,10 @@
     .edu-degree { font-size: 0.95rem; font-weight: 400; color: var(--bright); margin-bottom: 3px; }
     .edu-school { font-size: 0.82rem; color: var(--text); font-weight: 300; }
     .edu-year { font-size: 0.75rem; color: var(--dim); margin-top: 2px; }
-    .page-wrap { max-width: 980px; margin: 0 auto; padding: 70px 7%; }
+    .page-wrap { max-width: 1000px; margin: 0 auto; padding: 70px 7%; }
     .p-heading { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 400; font-style: italic; color: var(--bright); margin-bottom: 8px; }
     .p-sub { font-size: 0.82rem; color: var(--dim); margin-bottom: 64px; }
+    .lang-block { margin-bottom: 80px; }
     .lang-header { display: flex; align-items: center; gap: 20px; margin-bottom: 36px; }
     .lang-title { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 600; flex-shrink: 0; }
     .lang-title-py { color: var(--blue); }
@@ -69,43 +70,42 @@
     .lang-line { flex: 1; height: 1px; }
     .lang-line-py { background: linear-gradient(to right, var(--blue-dim), transparent); }
     .lang-line-r { background: linear-gradient(to right, var(--green-dim), transparent); }
-    .lang-block-py { margin-bottom: 80px; }
-    .proj-list .proj { display: block; text-decoration: none; padding: 28px 0; border-bottom: 1px solid var(--border); transition: all 0.25s; position: relative; }
-    .proj-list .proj:last-child { border-bottom: none; }
-    .proj-list .proj::after { content: '↗'; position: absolute; right: 0; top: 30px; font-size: 1rem; color: var(--border); transition: color 0.2s, transform 0.2s; }
-    .proj-list .proj:hover { padding-left: 10px; }
-    .proj-list .proj:hover::after { color: var(--blue); transform: translate(2px,-2px); }
-    .proj-list .proj:hover .proj-title { color: var(--blue); }
     .section-sep { display: flex; align-items: center; gap: 20px; margin: 0 0 80px 0; }
     .section-sep-line { flex: 1; height: 1px; background: var(--border); }
     .section-sep-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold-dim); flex-shrink: 0; }
-    .r-grid { display: grid; grid-template-columns: 1fr 1px 1fr; gap: 0; }
-    .r-col-divider { background: linear-gradient(to bottom, transparent 0%, #3a5e3a 15%, #3a5e3a 85%, transparent 100%); margin: 0 32px; }
-    .r-col { display: flex; flex-direction: column; }
-    .r-proj { display: block; text-decoration: none; padding: 26px 0; border-bottom: 1px solid var(--border); transition: all 0.2s; position: relative; }
-    .r-proj:last-child { border-bottom: none; }
-    .r-proj::after { content: '↗'; position: absolute; right: 0; top: 28px; font-size: 0.9rem; color: var(--border); transition: color 0.2s, transform 0.2s; }
-    .r-proj:hover { padding-left: 8px; }
-    .r-proj:hover::after { color: var(--green); transform: translate(2px,-2px); }
-    .r-proj:hover .proj-title { color: var(--green); }
-    .proj-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; color: var(--bright); margin-bottom: 8px; transition: color 0.2s; line-height: 1.3; }
-    .proj-list .proj-title { font-size: 1.25rem; }
-    .proj-desc { font-size: 0.85rem; color: var(--text); line-height: 1.75; font-weight: 300; margin-bottom: 10px; }
-    .proj-tags { display: flex; flex-wrap: wrap; gap: 5px; }
-    .ptag { font-size: 0.65rem; color: var(--dim); border: 1px solid var(--border); border-radius: 2px; padding: 2px 8px; }
+    .py-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+    .r-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .card { display: block; text-decoration: none; border-radius: 10px; padding: 28px 28px 24px; transition: all 0.25s; position: relative; }
+    .py-card { background: var(--bg3); border: 1px solid var(--blue-border); }
+    .py-card:hover { border-color: var(--blue); background: var(--blue-hover); transform: translateY(-3px); box-shadow: 0 8px 32px rgba(42,64,96,0.35); }
+    .py-card:hover .card-title { color: var(--blue); }
+    .py-card .card-arrow { color: var(--blue-dim); }
+    .py-card:hover .card-arrow { color: var(--blue); transform: translate(2px,-2px); }
+    .py-card .ctag { color: var(--blue); border: 1px solid var(--blue-dim); background: var(--blue-bg); }
+    .r-card { background: var(--bg3); border: 1px solid var(--green-border); }
+    .r-card:hover { border-color: var(--green); background: var(--green-hover); transform: translateY(-3px); box-shadow: 0 8px 32px rgba(61,94,61,0.3); }
+    .r-card:hover .card-title { color: var(--green); }
+    .r-card .card-arrow { color: var(--green-dim); }
+    .r-card:hover .card-arrow { color: var(--green); transform: translate(2px,-2px); }
+    .r-card .ctag { color: var(--green); border: 1px solid var(--green-dim); background: var(--green-bg); }
+    .card-arrow { position: absolute; top: 24px; right: 24px; font-size: 0.9rem; transition: color 0.2s, transform 0.2s; }
+    .card-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; color: var(--bright); margin-bottom: 12px; transition: color 0.2s; line-height: 1.35; padding-right: 24px; }
+    .card-desc { font-size: 0.87rem; color: var(--text); line-height: 1.75; font-weight: 300; margin-bottom: 16px; }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .ctag { font-size: 0.68rem; border-radius: 3px; padding: 3px 10px; }
     .sk-section { margin-bottom: 44px; }
     .sk-label { font-size: 0.68rem; font-weight: 500; color: var(--gold-dim); text-transform: uppercase; letter-spacing: 0.16em; margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
     .sk-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
     .sk-pills { display: flex; flex-wrap: wrap; gap: 10px; }
     .sk-pill { background: var(--bg2); border: 1px solid var(--border); border-radius: 3px; padding: 9px 18px; font-size: 0.85rem; color: var(--text); font-weight: 300; transition: border-color 0.2s, color 0.2s; }
     .sk-pill:hover { border-color: var(--gold-dim); color: var(--bright); }
-    @media (max-width: 700px) {
+    @media (max-width: 800px) {
       .about-grid { grid-template-columns: 1fr; gap: 32px; }
       .sidebar { position: static; }
       .about-grid, .page-wrap { padding-left: 5%; padding-right: 5%; }
       .nav-links { gap: 1.4rem; }
+      .py-grid { grid-template-columns: 1fr; }
       .r-grid { grid-template-columns: 1fr; }
-      .r-col-divider { display: none; }
     }
   </style>
 </head>
@@ -151,10 +151,15 @@
         Associate Data Analyst Intern · JD Irving · Dieppe, NB · Starting May 2026
       </div>
       <div class="bio-text">
+
         <p>I am a Master of Business Analytics student at the Sobey School of Business, Saint Mary's University in Halifax, Canada. My work bridges the gap between technical data science and real-world business strategy.</p>
+
         <p>I hold degrees in Computer Engineering and International Business Management; a combination that lets me speak both the language of algorithms and the language of business. I began my analytics journey in Saskatoon before relocating to Halifax to deepen my expertise in applied analytics.</p>
+
         <p>I work primarily with Python, R and SQL. I also apply Python for agentic AI and RAG projects. My passion is transforming complex, messy data into clear and actionable insights and exploring the exciting frontier of Agentic AI.</p>
+
         <p>Previously, I worked in marketing and data support which is where my curiosity for analytics was first sparked. I enjoy tackling challenging problems and finding creative, data-driven solutions.</p>
+
       </div>
       <div class="interests-block">
         <div class="interests-label">Research Interests</div>
@@ -193,27 +198,30 @@
     <div class="p-heading">Projects</div>
     <div class="p-sub">12 repositories &nbsp;·&nbsp; Python & R</div>
 
-    <div class="lang-block-py">
+    <div class="lang-block">
       <div class="lang-header">
         <span class="lang-title lang-title-py">Python</span>
         <span class="lang-badge lang-badge-py">3 projects</span>
         <span class="lang-line lang-line-py"></span>
       </div>
-      <div class="proj-list">
-        <a class="proj" href="https://github.com/Mina-TJ/mri-agentic-ai" target="_blank">
-          <div class="proj-title">MRI Reservation System — LangGraph Agentic AI</div>
-          <div class="proj-desc">A stateful, middleware-orchestrated appointment assistant for MRI scheduling. Features intent classification, urgency detection, identity verification, and Human-in-the-Loop review with full execution traceability.</div>
-          <div class="proj-tags"><span class="ptag">LangGraph</span><span class="ptag">Agentic AI</span><span class="ptag">HITL</span><span class="ptag">Safety Controls</span></div>
+      <div class="py-grid">
+        <a class="card py-card" href="https://github.com/Mina-TJ/mri-agentic-ai" target="_blank">
+          <span class="card-arrow">↗</span>
+          <div class="card-title">MRI Reservation System — LangGraph Agentic AI</div>
+          <div class="card-desc">A stateful appointment assistant for MRI scheduling with intent classification, urgency detection, identity verification, and Human-in-the-Loop review.</div>
+          <div class="card-tags"><span class="ctag">LangGraph</span><span class="ctag">Agentic AI</span><span class="ctag">HITL</span></div>
         </a>
-        <a class="proj" href="https://github.com/Mina-TJ/MBAN-langgraph-phd-agent" target="_blank">
-          <div class="proj-title">Automated PhD Outreach with Multi-Agent AI</div>
-          <div class="proj-desc">A multi-agent system that researches a professor's academic profile, drafts a personalized PhD interest email, and sends it only after human approval via Gmail SMTP integration.</div>
-          <div class="proj-tags"><span class="ptag">LangGraph</span><span class="ptag">Multi-Agent</span><span class="ptag">Gmail API</span><span class="ptag">HITL</span></div>
+        <a class="card py-card" href="https://github.com/Mina-TJ/MBAN-langgraph-phd-agent" target="_blank">
+          <span class="card-arrow">↗</span>
+          <div class="card-title">Automated PhD Outreach with Multi-Agent AI</div>
+          <div class="card-desc">Multi-agent system that researches a professor's profile, drafts a personalized email, and sends it only after human approval via Gmail SMTP.</div>
+          <div class="card-tags"><span class="ctag">LangGraph</span><span class="ctag">Multi-Agent</span><span class="ctag">Gmail API</span></div>
         </a>
-        <a class="proj" href="https://github.com/Mina-TJ/project2_rag" target="_blank">
-          <div class="proj-title">Vanilla RAG vs Agentic RAG — Healthcare Q&A</div>
-          <div class="proj-desc">Compares two RAG approaches on healthcare Q&A using MedlinePlus. Agentic RAG dynamically searches and retrieves across topics, demonstrating superior flexibility over the fixed Vanilla pipeline.</div>
-          <div class="proj-tags"><span class="ptag">RAG</span><span class="ptag">LangChain</span><span class="ptag">LangGraph</span><span class="ptag">OpenAI</span></div>
+        <a class="card py-card" href="https://github.com/Mina-TJ/project2_rag" target="_blank">
+          <span class="card-arrow">↗</span>
+          <div class="card-title">Vanilla RAG vs Agentic RAG — Healthcare Q&A</div>
+          <div class="card-desc">Compares two RAG approaches on healthcare Q&A using MedlinePlus. Agentic RAG dynamically searches across topics, outperforming the fixed Vanilla pipeline.</div>
+          <div class="card-tags"><span class="ctag">RAG</span><span class="ctag">LangChain</span><span class="ctag">OpenAI</span></div>
         </a>
       </div>
     </div>
@@ -224,66 +232,66 @@
       <div class="section-sep-line"></div>
     </div>
 
-    <div class="lang-header">
-      <span class="lang-title lang-title-r">R</span>
-      <span class="lang-badge lang-badge-r">9 projects</span>
-      <span class="lang-line lang-line-r"></span>
-    </div>
-
-    <div class="r-grid">
-      <div class="r-col">
-        <a class="r-proj" href="https://github.com/Mina-TJ/knn-churn-prediction" target="_blank">
-          <div class="proj-title">Customer Churn Prediction — kNN</div>
-          <div class="proj-desc">Predicts customer churn using kNN classification with ROC/AUC analysis and threshold optimization for business performance.</div>
-          <div class="proj-tags"><span class="ptag">Classification</span><span class="ptag">kNN</span><span class="ptag">ROC/AUC</span></div>
-        </a>
-        <a class="r-proj" href="https://github.com/Mina-TJ/Predicting-High-Price-Homes-in-Ames-Iowa" target="_blank">
-          <div class="proj-title">High-Value Property Classification — Ames Housing</div>
-          <div class="proj-desc">Identifies high-value homes using classification with thorough EDA and feature engineering before modelling.</div>
-          <div class="proj-tags"><span class="ptag">Classification</span><span class="ptag">EDA</span><span class="ptag">Feature Engineering</span></div>
-        </a>
-        <a class="r-proj" href="https://github.com/Mina-TJ/bagging-random-forest-ml" target="_blank">
-          <div class="proj-title">Ensemble Learning — Bagging & Random Forest</div>
-          <div class="proj-desc">Compares bagging and random forest against single-model approaches, evaluating predictive power and stability.</div>
-          <div class="proj-tags"><span class="ptag">Ensemble</span><span class="ptag">Random Forest</span><span class="ptag">Bagging</span></div>
-        </a>
-        <a class="r-proj" href="https://github.com/Mina-TJ/MBAN5560-loess-validation" target="_blank">
-          <div class="proj-title">LOESS Model Tuning & Validation</div>
-          <div class="proj-desc">Compares LOESS tuning strategies — train-test split, cross-validation, and bootstrap — showing validation tradeoffs.</div>
-          <div class="proj-tags"><span class="ptag">Nonparametric</span><span class="ptag">Cross-Validation</span><span class="ptag">Bootstrap</span></div>
-        </a>
-        <a class="r-proj" href="https://github.com/Mina-TJ/Gradient-Descent-Optimization-Regression" target="_blank">
-          <div class="proj-title">Gradient Descent Optimization from Scratch</div>
-          <div class="proj-desc">Gradient descent built from scratch for regression optimization — explores learning rate sensitivity and convergence.</div>
-          <div class="proj-tags"><span class="ptag">Optimization</span><span class="ptag">From Scratch</span><span class="ptag">Regression</span></div>
-        </a>
+    <div class="lang-block">
+      <div class="lang-header">
+        <span class="lang-title lang-title-r">R</span>
+        <span class="lang-badge lang-badge-r">9 projects</span>
+        <span class="lang-line lang-line-r"></span>
       </div>
-      <div class="r-col-divider"></div>
-      <div class="r-col">
-        <a class="r-proj" href="https://github.com/Mina-TJ/knn-house-price-and-churn-prediction" target="_blank">
-          <div class="proj-title">Housing Valuation & Churn Classification — kNN</div>
-          <div class="proj-desc">Dual kNN for regression and classification with bootstrap tuning and threshold optimization across both problems.</div>
-          <div class="proj-tags"><span class="ptag">Regression</span><span class="ptag">Classification</span><span class="ptag">Bootstrap</span></div>
+      <div class="r-grid">
+        <a class="card r-card" href="https://github.com/Mina-TJ/knn-churn-prediction" target="_blank">
+          <span class="card-arrow">↗</span>
+          <div class="card-title">Customer Churn Prediction — kNN</div>
+          <div class="card-desc">Predicts customer churn using kNN classification with ROC/AUC analysis and threshold optimization for business performance.</div>
+          <div class="card-tags"><span class="ctag">Classification</span><span class="ctag">kNN</span><span class="ctag">ROC/AUC</span></div>
         </a>
-        <a class="r-proj" href="https://github.com/Mina-TJ/Ames-Housing-regression" target="_blank">
-          <div class="proj-title">Residential Property Value Regression — Ames Housing</div>
-          <div class="proj-desc">End-to-end regression from data cleaning and EDA through to model building, evaluation, and interpretation.</div>
-          <div class="proj-tags"><span class="ptag">Regression</span><span class="ptag">EDA</span><span class="ptag">Model Evaluation</span></div>
+        <a class="card r-card" href="https://github.com/Mina-TJ/knn-house-price-and-churn-prediction" target="_blank">
+          <span class="card-arrow">↗</span>
+          <div class="card-title">Housing Valuation & Churn Classification — kNN</div>
+          <div class="card-desc">Dual kNN for regression and classification with bootstrap tuning and threshold optimization across both problems.</div>
+          <div class="card-tags"><span class="ctag">Regression</span><span class="ctag">Classification</span><span class="ctag">Bootstrap</span></div>
         </a>
-        <a class="r-proj" href="https://github.com/Mina-TJ/news-popularity-ml" target="_blank">
-          <div class="proj-title">Online News Popularity Prediction</div>
-          <div class="proj-desc">Predicts news article popularity using ML — analyses content and social features to identify virality patterns.</div>
-          <div class="proj-tags"><span class="ptag">Classification</span><span class="ptag">NLP Features</span><span class="ptag">ML</span></div>
+        <a class="card r-card" href="https://github.com/Mina-TJ/Predicting-High-Price-Homes-in-Ames-Iowa" target="_blank">
+          <span class="card-arrow">↗</span>
+          <div class="card-title">High-Value Property Classification — Ames Housing</div>
+          <div class="card-desc">Identifies high-value homes using classification with thorough EDA and feature engineering before modelling.</div>
+          <div class="card-tags"><span class="ctag">Classification</span><span class="ctag">EDA</span><span class="ctag">Feature Engineering</span></div>
         </a>
-        <a class="r-proj" href="https://github.com/Mina-TJ/Dynamic-Nonparametric-Smoothing-Visualization-Improved-Version-" target="_blank">
-          <div class="proj-title">Interactive Nonparametric Smoothing Visualization</div>
-          <div class="proj-desc">R Shiny app comparing smoothing techniques — moving average, kernel smoothing, and local regression with animated transitions.</div>
-          <div class="proj-tags"><span class="ptag">R Shiny</span><span class="ptag">Interactive</span><span class="ptag">Visualization</span></div>
+        <a class="card r-card" href="https://github.com/Mina-TJ/Ames-Housing-regression" target="_blank">
+          <span class="card-arrow">↗</span>
+          <div class="card-title">Residential Property Value Regression — Ames Housing</div>
+          <div class="card-desc">End-to-end regression from data cleaning and EDA through to model building, evaluation, and interpretation.</div>
+          <div class="card-tags"><span class="ctag">Regression</span><span class="ctag">EDA</span><span class="ctag">Model Evaluation</span></div>
         </a>
-        <a class="r-proj" href="https://github.com/Mina-TJ/Ames-Housing-regression" target="_blank">
-          <div class="proj-title">Residential Property Value Regression — Ames Housing</div>
-          <div class="proj-desc">End-to-end regression from data cleaning and EDA through to model building, evaluation, and interpretation.</div>
-          <div class="proj-tags"><span class="ptag">Regression</span><span class="ptag">EDA</span><span class="ptag">Model Evaluation</span></div>
+        <a class="card r-card" href="https://github.com/Mina-TJ/bagging-random-forest-ml" target="_blank">
+          <span class="card-arrow">↗</span>
+          <div class="card-title">Ensemble Learning — Bagging & Random Forest</div>
+          <div class="card-desc">Compares bagging and random forest against single-model approaches, evaluating predictive power and stability.</div>
+          <div class="card-tags"><span class="ctag">Ensemble</span><span class="ctag">Random Forest</span><span class="ctag">Bagging</span></div>
+        </a>
+        <a class="card r-card" href="https://github.com/Mina-TJ/news-popularity-ml" target="_blank">
+          <span class="card-arrow">↗</span>
+          <div class="card-title">Online News Popularity Prediction</div>
+          <div class="card-desc">Predicts news article popularity using ML — analyses content and social features to identify virality patterns.</div>
+          <div class="card-tags"><span class="ctag">Classification</span><span class="ctag">NLP Features</span><span class="ctag">ML</span></div>
+        </a>
+        <a class="card r-card" href="https://github.com/Mina-TJ/MBAN5560-loess-validation" target="_blank">
+          <span class="card-arrow">↗</span>
+          <div class="card-title">LOESS Model Tuning & Validation</div>
+          <div class="card-desc">Compares LOESS tuning strategies , train-test split, cross-validation, and bootstrap , showing validation tradeoffs.</div>
+          <div class="card-tags"><span class="ctag">Nonparametric</span><span class="ctag">Cross-Validation</span><span class="ctag">Bootstrap</span></div>
+        </a>
+        <a class="card r-card" href="https://github.com/Mina-TJ/Dynamic-Nonparametric-Smoothing-Visualization-Improved-Version-" target="_blank">
+          <span class="card-arrow">↗</span>
+          <div class="card-title">Interactive Nonparametric Smoothing Visualization</div>
+          <div class="card-desc">R Shiny app comparing smoothing techniques , moving average, kernel smoothing, and local regression with animated transitions.</div>
+          <div class="card-tags"><span class="ctag">R Shiny</span><span class="ctag">Interactive</span><span class="ctag">Visualization</span></div>
+        </a>
+        <a class="card r-card" href="https://github.com/Mina-TJ/Gradient-Descent-Optimization-Regression" target="_blank">
+          <span class="card-arrow">↗</span>
+          <div class="card-title">Gradient Descent Optimization from Scratch</div>
+          <div class="card-desc">Gradient descent built from scratch for regression optimization , explores learning rate sensitivity and convergence.</div>
+          <div class="card-tags"><span class="ctag">Optimization</span><span class="ctag">From Scratch</span><span class="ctag">Regression</span></div>
         </a>
       </div>
     </div>
